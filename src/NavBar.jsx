@@ -4,7 +4,7 @@ export default class NavBar extends Component {
   render() {
     return (
       <React.Fragment>
-        <nav className="navbar navbar-light navbar-expand-lg bg-light navbar-style">
+        <nav className="navbar navbar-light navbar-expand-lg navbar-style">
           <div className="container-fluid">
             <a className="navbar-brand" href="/#">
               BB
