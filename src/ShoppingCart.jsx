@@ -22,16 +22,60 @@ export default class ShoppingCart extends Component {
           {this.state.products.map((prod) => {
             return (
               <Product
+                //these are properties('props') of Product Component
                 key={prod.id}
-                id={prod.id}
-                productName={prod.productName}
-                price={prod.price}
-                quantity={prod.quantity}
-              />
+                product={prod}
+                onIncrement={this.handleIncrement}
+                onDecrement={this.handleDecrement}
+                onDelete={this.handleDelete}
+              >
+                <button className="btn btn-primary">Buy Now</button>
+              </Product>
             );
           })}
         </div>
       </div>
     );
   }
+
+  //executes when onIncrement event is fired
+  //which fires when '+' button is clicked
+  handleIncrement = (product, maxValue) => {
+    let allProducts = [...this.state.products];
+    let index = allProducts.indexOf(product);
+
+    if (allProducts[index].quantity < maxValue) {
+      allProducts[index].quantity++;
+      //update state of parent('this') component
+      this.setState({ products: allProducts });
+    }
+
+    //this.setState(() => (product.quantity += 1));
+  };
+
+  //executes when onDecrement event is fired
+  //which fires when '-' button is clicked
+  handleDecrement = (product, minValue) => {
+    //works the same as handleIncrement
+    if (product.quantity > minValue) {
+      //update state of parent('this') component
+      this.setState(() => (product.quantity -= 1));
+    }
+  };
+
+  handleDelete = (product) => {
+    //get index of selected product
+    let allProducts = [...this.state.products];
+    let index = allProducts.indexOf(product);
+
+    if (window.confirm("Are you sure you want to delete this item?")) {
+      //delete product based on index
+      allProducts.splice(index, 1);
+
+      //update state of parent('this') component
+      this.setState({
+        products: allProducts,
+      });
+    }
+  };
 }
