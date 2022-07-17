@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 export default class CustomersList extends Component {
   state = {
-    appTitle: "Customers",
+    pageTitle: "Customers",
     customersCount: 5,
     customers: [
       {
         id: 1,
-        name: "tae1",
+        name: "BCLB",
         phone: "123123",
         address: { city: "Baybay City", state: "Leyte" },
         photo: "https://picsum.photos/id/1010/60",
@@ -20,7 +20,7 @@ export default class CustomersList extends Component {
       },
       {
         id: 3,
-        name: "tae3",
+        name: "W1sh-",
         phone: "333333",
         address: { city: "Ormoc City", state: "Leyte" },
         photo: "https://picsum.photos/id/1012/60",
@@ -111,11 +111,13 @@ export default class CustomersList extends Component {
 
   //Executes when the user clicks "Change Picture" button in the grid
   //Receives the customer object and index of the currently clicked customer
-  onChangePictureClick = (cust) => {
+  onChangePictureClick = (cust, index) => {
+    //manual way of chaning picture
     cust.photo = "https://picsum.photos/id/120/60";
     this.setState(() => cust.photo);
+    console.log(index);
 
-    //get existing customer
+    //get existing customer dynamically
     //var custArr = this.state.customers;
     //custArr[index].photo = "https://picsum.photos/id/120/60";
 
