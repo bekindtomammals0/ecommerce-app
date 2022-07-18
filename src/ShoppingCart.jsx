@@ -16,7 +16,7 @@ export default class ShoppingCart extends Component {
     console.log("render() of ShoppingCart.jsx");
     return (
       <div className="container-fluid">
-        <h4>Shopping Cart</h4>
+        <h4 className="mt-2">Shopping Cart</h4>
         <div className="row">
           {this.state.products.map((prod) => {
             return (
