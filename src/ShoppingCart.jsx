@@ -2,22 +2,21 @@ import React, { Component } from "react";
 import Product from "./Product";
 
 export default class ShoppingCart extends Component {
-  state = {
-    products: [
-      { id: 1, productName: "iPhone 11", price: 12000, quantity: 0 },
-      { id: 2, productName: "iPad", price: 12000, quantity: 0 },
-      { id: 3, productName: "iMac", price: 50000, quantity: 0 },
-      { id: 4, productName: "Macbook", price: 27000, quantity: 0 },
-      { id: 5, productName: "Macbook Air", price: 25000, quantity: 0 },
-      { id: 6, productName: "iPhone X", price: 8900, quantity: 0 },
-      { id: 7, productName: "iPhone 13", price: 13000, quantity: 0 },
-    ],
-  };
+  //executes when the component is mounted
+  constructor(props) {
+    console.log("constructor(props) of ShoppingCart.jsx");
+    super(props); //call super class's constructor
+    //initialize the state inside constructor
+    this.state = {
+      products: [],
+    };
+  }
 
   render() {
+    console.log("render() of ShoppingCart.jsx");
     return (
       <div className="container-fluid">
-        <h4>Shopping Cart</h4>
+        <h4 className="mt-2">Shopping Cart</h4>
         <div className="row">
           {this.state.products.map((prod) => {
             return (
@@ -38,6 +37,44 @@ export default class ShoppingCart extends Component {
     );
   }
 
+  //executes after constructor and render method
+  //(include life cycle of child components, if any) of current component
+  componentDidMount = async () => {
+    console.log("componentDidMount() of ShoppingCart.jsx");
+    //fetch datasets from data source during componentDidMount
+    var response = await fetch("http://localhost:5000/products", {
+      method: "GET",
+    });
+
+    var prods = await response.json();
+    this.setState({ products: prods });
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(
+      "componentDidUpdate() of ShoppingCart.jsx",
+      prevProps,
+      prevState,
+      this.props,
+      this.state
+    );
+
+    // if (prevProps.x != this.props.x) {
+    //   //make http call
+    // }
+  }
+
+  //executes when crrent instance of current component
+  //is being deleted from memory
+  componentWillUnmount() {
+    console.log("componentWillUnmount() of ShoppingCart.jsx");
+  }
+
+  componentDidCatch(error, info) {
+    console.log("componentDidCatch() of ShoppingCart.jsx");
+    console.log(error, info);
+    localStorage.lastError = `${error}\n${JSON.stringify(info)}`;
+  }
   //executes when onIncrement event is fired
   //which fires when '+' button is clicked
   handleIncrement = (product, maxValue) => {
