@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useSyncExternalStore } from "react";
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -48,12 +48,20 @@ export default class Login extends Component {
     );
   }
 
-  onLoginClick = () => {
+  onLoginClick = async () => {
+    //fetch users from react-db.json @localhost:5000/users
+    var response = await fetch(
+      `http://localhost:5000/users?email=${this.state.email}&password=${this.state.password}`,
+      {
+        method: "GET",
+      }
+    );
+
+    var users = await response.json();
+    console.log(users);
     console.log(this.state);
-    if (
-      this.state.email === "admin@bbcommerce.com" &&
-      this.state.password === "@1"
-    ) {
+
+    if (users.length > 0) {
       //sucess login
       this.setState({
         message: <span className="text-success"> Admin Logged-in </span>,
@@ -70,6 +78,8 @@ export default class Login extends Component {
       });
     }
   };
+
+  componentDidMount = async () => {};
   // setEmail= () => {(){
 
   // };
