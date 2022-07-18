@@ -1,4 +1,4 @@
-import React, { Component, useSyncExternalStore } from "react";
+import React, { Component } from "react";
 export default class Login extends Component {
   constructor(props) {
     super(props);
